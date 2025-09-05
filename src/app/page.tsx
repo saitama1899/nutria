@@ -10,11 +10,11 @@ export default function Home() {
   const { messages, input, isLoading, startChat, handleSubmit, handleInputChange } = useChat()
 
   return (
-    <div className="font-sans h-dvh mx-auto overflow-hidden ">
+    <div className="font-sans h-dvh mx-auto overflow-hidden px-4">
       
       <div className="flex flex-col h-full">
         <Conversation>
-          <ConversationContent className="max-w-xl mx-auto">
+          <ConversationContent className="max-w-xl mx-auto p-0">
             {
               messages.map(message => (
                 <ChatMessage key={message.id} message={message} />
