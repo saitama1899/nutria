@@ -10,7 +10,7 @@ export default function Home() {
   const { messages, input, isLoading, startChat, handleSubmit, handleInputChange } = useChat()
 
   return (
-    <div className="font-sans h-screen mx-auto overflow-hidden ">
+    <div className="font-sans h-dvh mx-auto overflow-hidden ">
       
       <div className="flex flex-col h-full">
         <Conversation>
