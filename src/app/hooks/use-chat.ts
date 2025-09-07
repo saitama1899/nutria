@@ -1,46 +1,61 @@
-import { useState, useEffect, use } from 'react';
-import type { Message, ConversationMessage, GenerateStoryResponse } from '@/lib/types';
+import { useEffect, useState } from "react";
+import type {
+  ConversationMessage,
+  GenerateStoryResponse,
+  Message,
+} from "@/lib/types";
 
 export function useChat() {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    startChat()
-  }, [])
+    const savedMessages = localStorage.getItem("chatMessages");
+    if (savedMessages) {
+      setMessages(JSON.parse(savedMessages));
+    } else {
+      startChat();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem("chatMessages", JSON.stringify(messages));
+    }
+  }, [messages]);
 
   const startChat = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
-      const response = await fetch('/api/generate-story', {
-        method: 'POST',
-        body: JSON.stringify({ isStart: true })
-      })
+      const response = await fetch("/api/generate-story", {
+        method: "POST",
+        body: JSON.stringify({ isStart: true }),
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to generate story')
+        throw new Error("Failed to generate story");
       }
-  
-      const data = await response.json() as GenerateStoryResponse
 
-      const messageId = crypto.randomUUID()
+      const data = (await response.json()) as GenerateStoryResponse;
+
+      const messageId = crypto.randomUUID();
 
       const newMessage: Message = {
         id: messageId,
-        role: 'assistant',
+        role: "assistant",
         content: data.text,
-      }
+      };
 
-      setMessages([newMessage])
+      setMessages([newMessage]);
       // generateImage(messageId, data.imagePrompt)
     } catch (error) {
-      console.error('Error generating story:', error)
+      console.error("Error generating story:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   // const generateImage = async (messageId: string, imagePrompt: string) => {
   //   try {
@@ -50,18 +65,18 @@ export function useChat() {
   //         imagePrompt: imagePrompt
   //       })
   //     })
-  
+
   //     if (!response.ok) {
   //       throw new Error('Failed to generate image')
   //     }
-  
+
   //     const imageData = await response.json()
-  
+
   //     setMessages(prevMessages => prevMessages.map(message => {
   //       if (message.id === messageId) {
   //         return { ...message, image: imageData.image, imageLoading: false }
   //       }
-  
+
   //       return message
   //     }))
   //   } catch (error) {
@@ -76,55 +91,62 @@ export function useChat() {
   // }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (!input.trim() || isLoading) return
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: crypto.randomUUID(),
-      role: 'user',
-      content: input
-    }
+      role: "user",
+      content: input,
+    };
 
-    setIsLoading(true)
-    setInput('')
-    setMessages(prevMessages => [...prevMessages, userMessage])
+    setIsLoading(true);
+    setInput("");
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
-      const response = await fetch('/api/generate-story', {
-        method: 'POST',
+      const response = await fetch("/api/generate-story", {
+        method: "POST",
         body: JSON.stringify({
           userMessage: input,
           conversationHistory: messages,
-          isStart: false
-        })
-      })
+          isStart: false,
+        }),
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to generate story')
+        throw new Error("Failed to generate story");
       }
 
-      const data = await response.json() as GenerateStoryResponse
-      
-      const messageId = crypto.randomUUID()
+      const data = (await response.json()) as GenerateStoryResponse;
+
+      const messageId = crypto.randomUUID();
 
       const assistantMessage: Message = {
         id: messageId,
-        role: 'assistant',
+        role: "assistant",
         content: data.text,
-      }
+      };
 
-      setMessages(prevMessages => [...prevMessages, assistantMessage])
+      setMessages((prevMessages) => [...prevMessages, assistantMessage]);
       // generateImage(messageId, data.imagePrompt)
     } catch (error) {
-      console.error('Error generating story:', error)
+      console.error("Error generating story:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(e.target.value)
-  }
+    setInput(e.target.value);
+  };
 
-  return { messages, input, isLoading, startChat, handleSubmit, handleInputChange }
+  return {
+    messages,
+    input,
+    isLoading,
+    startChat,
+    handleSubmit,
+    handleInputChange,
+  };
 }
