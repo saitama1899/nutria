@@ -29,7 +29,7 @@ export function useChat() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/generate-story", {
+      const response = await fetch("/api/generate-chat", {
         method: "POST",
         body: JSON.stringify({ isStart: true }),
       });
@@ -105,7 +105,7 @@ export function useChat() {
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
-      const response = await fetch("/api/generate-story", {
+      const response = await fetch("/api/generate-chat", {
         method: "POST",
         body: JSON.stringify({
           userMessage: input,
