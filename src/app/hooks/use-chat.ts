@@ -21,7 +21,7 @@ export function useChat() {
 
   useEffect(() => {
     if (messages.length > 0) {
-      localStorage.setItem("chatMessages", JSON.stringify(messages));
+      localStorage.setItem("chatMessages", JSON.stringify(messages.slice(-25)));
     }
   }, [messages]);
 
@@ -102,7 +102,7 @@ export function useChat() {
 
     setIsLoading(true);
     setInput("");
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setMessages((prevMessages) => [...prevMessages.slice(-24), userMessage]);
 
     try {
       const response = await fetch("/api/generate-chat", {

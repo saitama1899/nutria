@@ -1,9 +1,10 @@
+import DOMPurify from "dompurify";
+import { Image } from "@/components/image";
+import { Loader } from "@/components/loader";
 import { Message, MessageContent } from "@/components/message";
 import { Response } from "@/components/response";
-import { type Message as MessageType } from "@/lib/types";
-import { Image } from "@/components/image";
 import { UI_MESSAGES } from "@/lib/consts";
-import { Loader } from "@/components/loader";
+import type { Message as MessageType } from "@/lib/types";
 
 export function ChatMessage({ message }: { message: MessageType }) {
   const { role, content } = message;
@@ -39,10 +40,9 @@ export function ChatMessage({ message }: { message: MessageType }) {
           )
         }
        */}
-        <Response>
-          {content}
-        </Response>
+        <Response>{content}</Response>
+        {/* <Response>{DOMPurify.sanitize(content)}</Response> */}
       </MessageContent>
     </Message>
-  )
+  );
 }
