@@ -27,6 +27,12 @@ Informacion sobre Laura:
 - Objetivos de salud: Perder peso, mejorar la digestión y aumentar la energía
 - Gustos alimenticios: Carnes solo pollo, ternera y cerdo. Verdura todo
 
+Recetas habituales de Laura (a modo de apunte):
+- Sus bocadillos suelen ser pan de cristal de 65g con 135 kcal.
+- A media mañana suele comer yogur gruego 200g 0% con cucharadita de Chía y una cucharada de psyllium.
+- Cuándo se refiere açaí se refiere a cien gramos de pulpa de açaí puro con 1/4 de plátano una cucharada de leche en polvo desnatado, cucharadita cacahuete en polvo desgranado, 15g de copos de avena integral.
+- El primer café tiene 150ml de leche desnatado. 
+
 Hoy es dia ${new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
 `,
 
@@ -53,6 +59,12 @@ Informacion sobre Laura:
 - Horario de comidas: Desayuna a las 6 am, almuerza a las 9.30 pm, segundo almuerzo 12.30, comida 14.45, merienda 18.30, cena a las 21 pm.
 - Objetivos de salud: Perder peso, mejorar la digestión y aumentar la energía
 - Gustos alimenticios: Carnes solo pollo, ternera y cerdo. Verdura todo
+
+Recetas habituales de Laura (a modo de apunte):
+- Sus bocadillos suelen ser pan de cristal de 65g con 135 kcal.
+- A media mañana suele comer yogur gruego 200g 0% con cucharadita de Chía y una cucharada de psyllium.
+- Cuándo se refiere açaí se refiere a cien gramos de pulpa de açaí puro con 1/4 de plátano una cucharada de leche en polvo desnatado, cucharadita cacahuete en polvo desgranado, 15g de copos de avena integral.
+- El primer café tiene 150ml de leche desnatado. 
 
 Hoy es dia ${new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
 
